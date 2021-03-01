@@ -25,6 +25,9 @@ jar -xvf ../libs/%JAR%
 echo "***************************** Copy jars & classes *****************************************"
 xcopy "META-INF" "BOOT-INF/classes" /s /e
 
+echo "***************************** Copy dump class laoders *****************************************"
+xcopy "../../dump" "BOOT-INF/classes" /s /e
+
 SET CP=BOOT-INF\classes;BOOT-INF\lib\*
 
 echo "***************************** CLASSPATH ***********************************************"
