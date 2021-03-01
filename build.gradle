@@ -1,0 +1,48 @@
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
+
+plugins {
+	id "org.springframework.boot" version "2.4.2"
+	id "io.spring.dependency-management" version "1.0.11.RELEASE"
+	id 'java'
+}
+
+group = 'com.cxf'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+	maven { url = uri("https://repo.spring.io/milestone") }
+	maven { url = uri("https://repo.spring.io/snapshot") }
+
+}
+
+dependencies {
+
+	implementation "org.springframework.experimental:spring-graalvm-native:0.8.5"
+	implementation "org.springframework.boot:spring-boot-starter-web"
+	implementation "org.apache.cxf:cxf-spring-boot-starter-jaxws:3.4.2"
+	implementation "org.springframework.boot:spring-boot-starter-validation"
+	annotationProcessor 'org.springframework:spring-context-indexer'
+
+	implementation "javax.activation:activation:1.1.1"
+	implementation "javax.xml.bind:jaxb-api:2.3.1"
+	implementation "com.sun.xml.bind:jaxb-core:3.0.0"
+	implementation "com.sun.xml.bind:jaxb-impl:2.3.3"
+	implementation "com.sun.xml.ws:jaxws-ri:2.3.3"
+    implementation "org.apache.cxf:cxf-rt-features-clustering:3.1.13"
+    compile("org.springframework.boot:spring-boot-devtools")
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: "org.junit.vintage', module: 'junit-vintage-engine"
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
+
+
+
+

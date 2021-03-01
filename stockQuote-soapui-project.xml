@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="76ed714b-e873-4794-86b4-2edfbf9f2786" activeEnvironment="Default" name="stockQuote" resourceRoot="" soapui-version="5.6.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="1809db52-6ee4-43fd-9d0d-5b3d41008f61" wsaVersion="NONE" name="StockQuoteReporterSoapBinding" type="wsdl" bindingName="{http://cxf.apache.org}StockQuoteReporterSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/cxf/ws/stockQuote?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/cxf/ws/stockQuote?wsdl"><con:part><con:url>http://localhost:8080/cxf/ws/stockQuote?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="StockQuoteReporter" targetNamespace="http://cxf.apache.org" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://cxf.apache.org" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="http://demo.mycompany.com/types">
+  <wsdl:import location="http://localhost:8080/cxf/ws/stockQuote?wsdl=quoteReporter.wsdl" namespace="http://demo.mycompany.com/types"></wsdl:import>
+  <wsdl:binding name="StockQuoteReporterSoapBinding" type="ns1:quoteReporter">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getStockQuote">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="getStockQuote">
+        <soap:body namespace="http://demo.mycompany.com/types" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getStockQuoteResponse">
+        <soap:body namespace="http://demo.mycompany.com/types" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="StockQuoteReporter">
+    <wsdl:port binding="tns:StockQuoteReporterSoapBinding" name="StockQuotePort">
+      <soap:address location="http://localhost:8080/cxf/ws/stockQuote"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://localhost:8080/cxf/ws/stockQuote?wsdl=quoteReporter.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="quoteReporter" targetNamespace="http://demo.mycompany.com/types" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://demo.mycompany.com/types">
+  <wsdl:types>
+    <xs:schema targetNamespace="http://demo.mycompany.com/types" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="quote">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:string"/>
+          <xs:element minOccurs="0" name="time" type="xs:string"/>
+          <xs:element minOccurs="0" name="value" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getStockQuote">
+    <wsdl:part name="stockTicker" type="xsd:string"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getStockQuoteResponse">
+    <wsdl:part name="updatedQuote" type="ns1:quote"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="quoteReporter">
+    <wsdl:operation name="getStockQuote">
+      <wsdl:input message="ns1:getStockQuote" name="getStockQuote"></wsdl:input>
+      <wsdl:output message="ns1:getStockQuoteResponse" name="getStockQuoteResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/cxf/ws/stockQuote</con:endpoint></con:endpoints><con:operation id="b4e0f6aa-3149-4461-85bb-291979c25a51" isOneWay="false" action="" name="getStockQuote" bindingOperationName="getStockQuote" type="Request-Response" outputName="getStockQuoteResponse" inputName="getStockQuote" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="75e88545-2e20-45f1-a66e-90f93299e812" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/cxf/ws/stockQuote</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:typ="http://demo.mycompany.com/types">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <typ:getStockQuote>\r
+         <stockTicker>TSLA</stockTicker>\r
+      </typ:getStockQuote>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://cxf.apache.org/quoteReporter/getStockQuote"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
