@@ -20,6 +20,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.cxf.common.spi.GeneratedClassClassLoaderCapture;
 import org.apache.cxf.common.util.StringUtils;
 
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -48,5 +50,10 @@ public class DumpingClassLoaderCapturer implements GeneratedClassClassLoaderCapt
 	@Override
 	public void capture(String className, byte[] bytes) {
 		classes.putIfAbsent(className, bytes);
+	}
+
+	@EventListener(ApplicationReadyEvent.class)
+	public void startApp() {
+		System.out.println("app start");
 	}
 }

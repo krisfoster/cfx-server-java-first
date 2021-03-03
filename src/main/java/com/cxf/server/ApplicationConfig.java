@@ -8,15 +8,31 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.annotation.PreDestroy;
 import javax.xml.ws.Endpoint;
 
 import org.apache.cxf.Bus;
+import org.apache.cxf.bus.spring.SpringBus;
 import org.apache.cxf.clustering.FailoverFeature;
 import org.apache.cxf.clustering.RetryStrategy;
+import org.apache.cxf.common.spi.GeneratedClassClassLoaderCapture;
+import org.apache.cxf.common.spi.GeneratedNamespaceClassLoader;
+import org.apache.cxf.common.spi.NamespaceClassCreator;
+import org.apache.cxf.endpoint.dynamic.ExceptionClassCreator;
+import org.apache.cxf.endpoint.dynamic.ExceptionClassLoader;
 import org.apache.cxf.feature.Feature;
+import org.apache.cxf.jaxb.FactoryClassCreator;
+import org.apache.cxf.jaxb.FactoryClassLoader;
+import org.apache.cxf.jaxb.WrapperHelperClassLoader;
+import org.apache.cxf.jaxb.WrapperHelperCreator;
 import org.apache.cxf.jaxws.EndpointImpl;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
+import org.apache.cxf.jaxws.spi.WrapperClassCreator;
+import org.apache.cxf.jaxws.spi.WrapperClassLoader;
+import org.apache.cxf.wsdl.ExtensionClassCreator;
+import org.apache.cxf.wsdl.ExtensionClassLoader;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,8 +42,23 @@ public class ApplicationConfig {
 	// assumes the current class is called MyLogger
 	private final static Logger LOGGER = Logger.getLogger(ApplicationConfig.class.getName());
 
+
+
+	@Bean(name="myBus")
+	public Bus myBus(@Qualifier("cxf") Bus bus, DumpingClassLoaderCapturer capturer){
+		LOGGER.info("Creating CXf bus.....");
+		bus.setExtension(capturer, GeneratedClassClassLoaderCapture.class);
+		/*bus.setExtension(new WrapperHelperClassLoader(bus), WrapperHelperCreator.class);
+		bus.setExtension(new ExtensionClassLoader(bus), ExtensionClassCreator.class);
+		bus.setExtension(new ExceptionClassLoader(bus), ExceptionClassCreator.class);
+		bus.setExtension(new WrapperClassLoader(bus), WrapperClassCreator.class);
+		bus.setExtension(new FactoryClassLoader(bus), FactoryClassCreator.class);
+		bus.setExtension(new GeneratedNamespaceClassLoader(bus), NamespaceClassCreator.class);*/
+		return bus;
+	}
+
 	@Bean
-	public Endpoint endpoint(Bus bus) {
+	public Endpoint endpoint(@Qualifier("myBus") Bus bus) {
 		LOGGER.log(Level.INFO, "ENDPOINT Creating Server ednpoint object");
 		EndpointImpl endpoint =
 			new EndpointImpl(bus,new StockQuoteReporter());
@@ -37,7 +68,7 @@ public class ApplicationConfig {
 	}
 
 	@Bean("stockQuoteSoapClient")
-	public QuoteReporter stockQuoteSoapClient(Bus bus){
+	public QuoteReporter stockQuoteSoapClient(@Qualifier("myBus")Bus bus){
 		LOGGER.log(Level.INFO, "Creating client.............");
 		final JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
 		factory.setBus(bus);
@@ -59,5 +90,10 @@ public class ApplicationConfig {
 		FailoverFeature failoverFeature = new FailoverFeature();
 		failoverFeature.setStrategy(retryStrategy);
 		return failoverFeature;
+	}
+
+	@PreDestroy
+	public void onShutDown() {
+		System.out.println("closing application context..let's do the final resource cleanup");
 	}
 }
