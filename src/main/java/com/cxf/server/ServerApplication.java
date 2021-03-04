@@ -18,6 +18,7 @@ public class ServerApplication {
 
 	private final static Logger LOGGER = Logger.getLogger(ServerApplication.class.getName());
 	private final String SYS_PROPERTY_CAPTURE_DIR = "capture.dir";
+	private final String SYS_PROPERTY_CAPTURE = "capture";
 
 	private String[] args;
 	private File dumpDir;
@@ -32,7 +33,7 @@ public class ServerApplication {
 
 		// If a capture dir system property is set, assume we are running in capture mode and
 		// set up the classes dump directory
-		if (Boolean.getBoolean(SYS_PROPERTY_CAPTURE_DIR)) {
+		if (Boolean.getBoolean(SYS_PROPERTY_CAPTURE)) {
 			dumpDir = new File(System.getProperty("capture.dir"));
 			if (dumpDir.exists() && !dumpDir.isDirectory()) {
 				throw new FileNotFoundException(
@@ -55,7 +56,7 @@ public class ServerApplication {
 	@PreDestroy
 	public void onExit() {
 		// Only attempt to dump the classes if we are running in capture mode
-		if (Boolean.getBoolean(SYS_PROPERTY_CAPTURE_DIR)) {
+		if (Boolean.getBoolean(SYS_PROPERTY_CAPTURE)) {
 			try {
 				this.capturer.dumpTo(this.dumpDir);
 			} catch (Exception e) {
