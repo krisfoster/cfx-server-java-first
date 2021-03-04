@@ -1,11 +1,9 @@
 package com.cxf.server;
 
-import com.cxf.server.beans.OmniBus;
 import com.cxf.server.graal.DumpingClassLoaderCapturer;
 import com.cxf.server.service.QuoteReporter;
 import com.cxf.server.service.StockQuoteReporter;
 
-import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
