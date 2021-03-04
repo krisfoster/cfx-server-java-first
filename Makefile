@@ -24,6 +24,7 @@ debug:
 profile: build
 	@echo "Profiling to generate config.."
 	java -agentlib:native-image-agent=config-merge-dir=src/main/resources/META-INF/native-image \
+            -Dnative=true \
 			-Dorg.graalvm.nativeimage.imagecode=agent \
 			-Dorg.apache.cxf.JDKBugHacks.all=true \
 			-jar build/libs/cxf-server-java-first-0.0.1-SNAPSHOT.jar
