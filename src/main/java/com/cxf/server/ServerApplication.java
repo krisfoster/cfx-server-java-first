@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.annotation.PreDestroy;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.logging.Logger;
 
 @SpringBootApplication(proxyBeanMethods = false)
@@ -18,28 +19,37 @@ public class ServerApplication {
 	private final static Logger LOGGER = Logger.getLogger(ServerApplication.class.getName());
 
 	private String[] args;
+	private File dumpDir;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		ServerApplication server = new ServerApplication(args);
 		server.run();
 	}
 
-	public ServerApplication(String[] args) {
+	public ServerApplication(String[] args) throws FileNotFoundException {
 		this.args = args;
+		dumpDir = new File(System.getProperty("capture.dir"));
+		if (dumpDir.exists() && !dumpDir.isDirectory()) {
+			throw new FileNotFoundException(
+					"Dump dir exists and is not a dir : " + dumpDir.getAbsolutePath());
+		}
+		if (!dumpDir.exists()) {
+			LOGGER.info("Creating classes dump directory: " + dumpDir.getAbsolutePath());
+			dumpDir.mkdirs();
+		}
 	}
 
 	public void run() {
 		final SpringApplication app = new SpringApplication(ServerApplication.class);
 		//app.addListeners(new AppListener());
 		app.run(this.args);
+		LOGGER.info("***** Application STARTED *****");
 	}
 
 	@PreDestroy
 	public void onExit() {
-		System.out.println("I am dead!");
-		System.out.println(">> DUMP >> " + this.capturer);
 		try {
-			this.capturer.dumpTo(new File("./build/dump2/"));
+			this.capturer.dumpTo(this.dumpDir);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

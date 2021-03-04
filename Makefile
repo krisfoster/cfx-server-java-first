@@ -31,6 +31,7 @@ profile: build
 capture: build
 	@echo "Capturing"
 	java -Dcapture=true \
+         -Dcapture.dir=src/main/resources/dump \
          -Dorg.apache.cxf.JDKBugHacks.all=true \
          -Dorg.graalvm.nativeimage.imagecode=agent \
 		  -jar build/libs/cxf-server-java-first-0.0.1-SNAPSHOT.jar

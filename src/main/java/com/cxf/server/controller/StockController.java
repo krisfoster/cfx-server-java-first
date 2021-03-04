@@ -39,7 +39,6 @@ public class StockController {
 	@RequestMapping(value = "/quote/{ticker}")
 	public Quote getQuote(@PathVariable("ticker") String ticker){
 		LOGGER.info("STOCK QUOTE");
-
 		return quoteReporter.getStockQuote(ticker);
 	}
 }
