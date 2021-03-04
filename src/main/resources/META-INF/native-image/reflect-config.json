@@ -275,6 +275,12 @@
   "allPublicMethods":true
 },
 {
+  "name":"com.sun.proxy.$Proxy90",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true,
+  "allPublicMethods":true
+},
+{
   "name":"com.sun.proxy.$Proxy96",
   "allDeclaredFields":true,
   "allDeclaredMethods":true,
@@ -654,6 +660,10 @@
 },
 {
   "name":"javax.annotation.ManagedBean"
+},
+{
+  "name":"javax.annotation.PreDestroy",
+  "allDeclaredMethods":true
 },
 {
   "name":"javax.annotation.Resource"
