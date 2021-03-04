@@ -15,7 +15,6 @@ import javax.xml.ws.Endpoint;
 
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
-import org.apache.cxf.bus.spring.SpringBus;
 import org.apache.cxf.clustering.FailoverFeature;
 import org.apache.cxf.clustering.RetryStrategy;
 import org.apache.cxf.common.spi.GeneratedClassClassLoaderCapture;
@@ -36,12 +35,9 @@ import org.apache.cxf.jaxws.spi.WrapperClassLoader;
 import org.apache.cxf.wsdl.ExtensionClassCreator;
 import org.apache.cxf.wsdl.ExtensionClassLoader;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 @Configuration
 public class ApplicationConfig {
@@ -58,15 +54,17 @@ public class ApplicationConfig {
 	}
 
 	@Bean
-	public Endpoint endpoint(Bus bus, DumpingClassLoaderCapturer capturer) {
-		LOGGER.log(Level.INFO, "ENDPOINT Creating Server endpoint object");
-
+	public Bus bus(DumpingClassLoaderCapturer capturer, Bus cxfBus) {
+		LOGGER.log(Level.INFO, "BUS START");
+		final Bus bus = cxfBus;
+		bus.setId("krf_ID");
 		BusFactory.setDefaultBus(bus);
 		if (Boolean.getBoolean("capture")) {
 			// Capture
 			LOGGER.info("Capturer setup for BUS");
 			bus.setExtension(capturer, GeneratedClassClassLoaderCapture.class);
-		} else {
+		}
+		if (Boolean.getBoolean("native")) {
 			// Runtime
 			LOGGER.info("Runtime setup for BUS");
 
@@ -78,7 +76,14 @@ public class ApplicationConfig {
 			bus.setExtension(new GeneratedNamespaceClassLoader(bus), NamespaceClassCreator.class);
 
 		}
+		LOGGER.log(Level.INFO, "BUS END");
+		return bus;
+	}
 
+	@Bean
+	public Endpoint endpoint(Bus bus) {
+		LOGGER.log(Level.INFO, "ENDPOINT Creating Server endpoint object");
+		LOGGER.info("BUS ID: " + bus.getId());
 		EndpointImpl endpoint = new EndpointImpl(bus, new StockQuoteReporter());
 		endpoint.publish("/stockQuote");
 		LOGGER.log(Level.INFO, "End Creating server.............");
@@ -88,23 +93,6 @@ public class ApplicationConfig {
 	@Bean("stockQuoteSoapClient")
 	public QuoteReporter stockQuoteSoapClient(Bus bus, DumpingClassLoaderCapturer capturer) {
 		LOGGER.log(Level.INFO, "Creating client.............");
-
-		if (Boolean.getBoolean("capture")) {
-			// Capture
-			LOGGER.info("Capturer setup for BUS");
-			bus.setExtension(capturer, GeneratedClassClassLoaderCapture.class);
-		} else {
-			// Runtime
-			LOGGER.info("Runtime setup for BUS");
-
-			bus.setExtension(new WrapperHelperClassLoader(bus), WrapperHelperCreator.class);
-			bus.setExtension(new ExtensionClassLoader(bus), ExtensionClassCreator.class);
-			bus.setExtension(new ExceptionClassLoader(bus), ExceptionClassCreator.class);
-			bus.setExtension(new WrapperClassLoader(bus), WrapperClassCreator.class);
-			bus.setExtension(new FactoryClassLoader(bus), FactoryClassCreator.class);
-			bus.setExtension(new GeneratedNamespaceClassLoader(bus), NamespaceClassCreator.class);
-
-		}
 
 		final JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
 		factory.setBus(bus);
