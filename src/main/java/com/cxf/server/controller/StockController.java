@@ -39,15 +39,6 @@ public class StockController {
 	@RequestMapping(value = "/quote/{ticker}")
 	public Quote getQuote(@PathVariable("ticker") String ticker){
 		LOGGER.info("STOCK QUOTE");
-		if (Boolean.getBoolean("capture")) {
-			try {
-				LOGGER.info("Dumping class files");
-				this.clsLoader.dumpTo(new File("./build/dump/"));
-				LOGGER.info("Log files dumped to ./build/dump/");
-			} catch (IOException e) {
-				System.err.println(e.getMessage());
-			}
-		}
 
 		return quoteReporter.getStockQuote(ticker);
 	}
