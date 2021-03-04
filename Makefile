@@ -41,9 +41,7 @@ clean:
 	./gradlew clean
 
 run:
-	./build/native-image/cxf-server-java-first -Dorg.apache.cxf.JDKBugHacks.all=true
-
-
+	./build/native-image/cxf-server-java-first -Dorg.apache.cxf.JDKBugHacks.all=true -Dnative=true
 
 d-build:
 	docker build \
