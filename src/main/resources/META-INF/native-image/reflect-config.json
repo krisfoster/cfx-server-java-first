@@ -42,25 +42,6 @@
   "allDeclaredConstructors":true
 },
 {
-  "name":"com.cxf.server.ApplicationConfig$$EnhancerBySpringCGLIB$$304547ca",
-  "allDeclaredFields":true,
-  "allDeclaredMethods":true,
-  "allDeclaredConstructors":true,
-  "fields":[{"name":"CGLIB$FACTORY_DATA"}],
-  "methods":[
-    {"name":"endpoint","parameterTypes":["org.apache.cxf.Bus"] }, 
-    {"name":"stockQuoteSoapClient","parameterTypes":["org.apache.cxf.Bus"] }
-  ]
-},
-{
-  "name":"com.cxf.server.ApplicationConfig$$EnhancerBySpringCGLIB$$304547ca$$FastClassBySpringCGLIB$$94952267",
-  "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
-},
-{
-  "name":"com.cxf.server.ApplicationConfig$$FastClassBySpringCGLIB$$24fc70b1",
-  "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
-},
-{
   "name":"com.cxf.server.ServerApplication",
   "allDeclaredFields":true,
   "allDeclaredMethods":true,
@@ -78,6 +59,12 @@
   "allDeclaredFields":true,
   "allDeclaredMethods":true,
   "allDeclaredConstructors":true
+},
+{
+  "name":"com.cxf.server.graal.DumpingClassLoaderCapturer",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true,
+  "methods":[{"name":"capture","parameterTypes":["java.lang.String","byte[]"] }]
 },
 {
   "name":"com.cxf.server.service.QuoteReporter",
@@ -112,6 +99,9 @@
 {
   "name":"com.cxf.server.service.jaxws_asm.GetStockQuote_WrapperTypeHelper1",
   "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.cxf.server.service.jaxws_asm.package-info"
 },
 {
   "name":"com.fasterxml.jackson.core.JsonGenerator"
@@ -279,7 +269,13 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"com.sun.proxy.$Proxy98",
+  "name":"com.sun.proxy.$Proxy89",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true,
+  "allPublicMethods":true
+},
+{
+  "name":"com.sun.proxy.$Proxy96",
   "allDeclaredFields":true,
   "allDeclaredMethods":true,
   "allPublicMethods":true
@@ -416,10 +412,6 @@
   "methods":[{"name":"getModule","parameterTypes":[] }]
 },
 {
-  "name":"java.lang.ClassLoader",
-  "methods":[{"name":"defineClass","parameterTypes":["java.lang.String","byte[]","int","int","java.security.ProtectionDomain"] }]
-},
-{
   "name":"java.lang.Class[]"
 },
 {
@@ -485,6 +477,13 @@
   "name":"java.lang.String[]"
 },
 {
+  "name":"java.lang.Thread"
+},
+{
+  "name":"java.lang.Throwable",
+  "methods":[{"name":"getSuppressed","parameterTypes":[] }]
+},
+{
   "name":"java.lang.annotation.Annotation[]"
 },
 {
@@ -509,17 +508,11 @@
 },
 {
   "name":"java.lang.invoke.MethodHandles",
-  "methods":[
-    {"name":"lookup","parameterTypes":[] }, 
-    {"name":"privateLookupIn","parameterTypes":["java.lang.Class","java.lang.invoke.MethodHandles$Lookup"] }
-  ]
+  "methods":[{"name":"lookup","parameterTypes":[] }]
 },
 {
   "name":"java.lang.invoke.MethodHandles$Lookup",
-  "methods":[
-    {"name":"defineClass","parameterTypes":["byte[]"] }, 
-    {"name":"findClass","parameterTypes":["java.lang.String"] }
-  ]
+  "methods":[{"name":"findClass","parameterTypes":["java.lang.String"] }]
 },
 {
   "name":"java.lang.module.Configuration",
@@ -547,6 +540,9 @@
 },
 {
   "name":"java.lang.reflect.InaccessibleObjectException"
+},
+{
+  "name":"java.lang.reflect.Method"
 },
 {
   "name":"java.lang.reflect.Proxy",
@@ -597,18 +593,6 @@
   "name":"java.security.SecurityPermission"
 },
 {
-  "name":"java.sql.DriverManager"
-},
-{
-  "name":"java.util.ArrayList"
-},
-{
-  "name":"java.util.Enumeration"
-},
-{
-  "name":"java.util.HashSet"
-},
-{
   "name":"java.util.List"
 },
 {
@@ -640,6 +624,12 @@
 {
   "name":"java.util.concurrent.ThreadFactory",
   "allPublicMethods":true
+},
+{
+  "name":"java.util.concurrent.ThreadPoolExecutor"
+},
+{
+  "name":"java.util.concurrent.ThreadPoolExecutor$Worker"
 },
 {
   "name":"java.util.jar.JarFile",
@@ -716,9 +706,6 @@
 },
 {
   "name":"javax.persistence.PersistenceContext"
-},
-{
-  "name":"javax.security.auth.login.Configuration"
 },
 {
   "name":"javax.servlet.Filter",
@@ -867,7 +854,19 @@
   "name":"javax.xml.ws.WebServiceRef"
 },
 {
+  "name":"jdk.internal.reflect.DelegatingMethodAccessorImpl"
+},
+{
+  "name":"jdk.internal.reflect.NativeMethodAccessorImpl"
+},
+{
   "name":"long[]"
+},
+{
+  "name":"org.apache.catalina.authenticator.AuthenticatorBase"
+},
+{
+  "name":"org.apache.catalina.connector.CoyoteAdapter"
 },
 {
   "name":"org.apache.catalina.core.ApplicationContextFacade",
@@ -935,11 +934,19 @@
   ]
 },
 {
-  "name":"org.apache.catalina.loader.JdbcLeakPrevention",
-  "methods":[
-    {"name":"<init>","parameterTypes":[] }, 
-    {"name":"clearJdbcDriverRegistrations","parameterTypes":[] }
-  ]
+  "name":"org.apache.catalina.core.ApplicationFilterChain"
+},
+{
+  "name":"org.apache.catalina.core.StandardContextValve"
+},
+{
+  "name":"org.apache.catalina.core.StandardEngineValve"
+},
+{
+  "name":"org.apache.catalina.core.StandardHostValve"
+},
+{
+  "name":"org.apache.catalina.core.StandardWrapperValve"
 },
 {
   "name":"org.apache.catalina.startup.Tomcat"
@@ -949,11 +956,23 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"org.apache.catalina.valves.ErrorReportValve"
+},
+{
+  "name":"org.apache.coyote.AbstractProcessorLight"
+},
+{
+  "name":"org.apache.coyote.AbstractProtocol$ConnectionHandler"
+},
+{
   "name":"org.apache.coyote.UpgradeProtocol"
 },
 {
   "name":"org.apache.coyote.http11.Http11NioProtocol",
   "allPublicMethods":true
+},
+{
+  "name":"org.apache.coyote.http11.Http11Processor"
 },
 {
   "name":"org.apache.cxf.Bus",
@@ -987,12 +1006,25 @@
   "allDeclaredMethods":true
 },
 {
+  "name":"org.apache.cxf.bindings.xformat.XMLBindingExtensibility",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
+},
+{
   "name":"org.apache.cxf.bindings.xformat.XMLBindingMessageFormat",
   "methods":[{"name":"getOtherAttributes","parameterTypes":[] }]
 },
 {
+  "name":"org.apache.cxf.bindings.xformat.XMLBindingMessageFormatExtensibility",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
+},
+{
   "name":"org.apache.cxf.bindings.xformat.XMLFormatBinding",
   "methods":[{"name":"getOtherAttributes","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.cxf.bindings.xformat.XMLFormatBindingExtensibility"
 },
 {
   "name":"org.apache.cxf.bus.extension.ExtensionManagerBus",
@@ -1110,6 +1142,11 @@
   "name":"org.apache.cxf.common.spi.ClassLoaderProxyService"
 },
 {
+  "name":"org.apache.cxf.common.spi.GeneratedClassClassLoaderCapture",
+  "allDeclaredMethods":true,
+  "allPublicMethods":true
+},
+{
   "name":"org.apache.cxf.common.util.ASMHelper"
 },
 {
@@ -1147,6 +1184,9 @@
   "name":"org.apache.cxf.endpoint.ClientCallback"
 },
 {
+  "name":"org.apache.cxf.endpoint.ClientImpl"
+},
+{
   "name":"org.apache.cxf.endpoint.ClientLifeCycleManager"
 },
 {
@@ -1170,6 +1210,9 @@
   "name":"org.apache.cxf.endpoint.dynamic.ExceptionClassCreatorProxyService"
 },
 {
+  "name":"org.apache.cxf.frontend.ClientProxy"
+},
+{
   "name":"org.apache.cxf.frontend.ServerFactoryBean",
   "methods":[{"name":"getBeanName","parameterTypes":[] }]
 },
@@ -1187,6 +1230,9 @@
     {"name":"setOutFaultInterceptors","parameterTypes":["java.util.List"] }, 
     {"name":"setOutInterceptors","parameterTypes":["java.util.List"] }
   ]
+},
+{
+  "name":"org.apache.cxf.interceptor.AbstractOutDatabindingInterceptor"
 },
 {
   "name":"org.apache.cxf.interceptor.InterceptorProvider",
@@ -1211,10 +1257,16 @@
   "methods":[{"name":"<init>","parameterTypes":["org.apache.cxf.Bus"] }]
 },
 {
+  "name":"org.apache.cxf.jaxb.io.DataWriterImpl"
+},
+{
   "name":"org.apache.cxf.jaxws.EndpointImpl",
   "allDeclaredFields":true,
   "allDeclaredMethods":true,
   "allPublicMethods":true
+},
+{
+  "name":"org.apache.cxf.jaxws.JaxWsClientProxy"
 },
 {
   "name":"org.apache.cxf.jaxws.JaxWsServerFactoryBean"
@@ -1247,6 +1299,9 @@
   "name":"org.apache.cxf.metrics.codahale.CodahaleMetricsProvider"
 },
 {
+  "name":"org.apache.cxf.phase.PhaseInterceptorChain"
+},
+{
   "name":"org.apache.cxf.phase.PhaseManager"
 },
 {
@@ -1267,33 +1322,10 @@
   "allDeclaredConstructors":true
 },
 {
-  "name":"org.apache.cxf.spring.boot.autoconfigure.CxfAutoConfiguration$$EnhancerBySpringCGLIB$$f32bf794",
-  "allDeclaredFields":true,
-  "allDeclaredMethods":true,
-  "allDeclaredConstructors":true,
-  "fields":[{"name":"CGLIB$FACTORY_DATA"}],
-  "methods":[{"name":"cxfServletRegistration","parameterTypes":[] }]
-},
-{
-  "name":"org.apache.cxf.spring.boot.autoconfigure.CxfAutoConfiguration$$EnhancerBySpringCGLIB$$f32bf794$$FastClassBySpringCGLIB$$3d9fe307",
-  "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
-},
-{
-  "name":"org.apache.cxf.spring.boot.autoconfigure.CxfAutoConfiguration$$FastClassBySpringCGLIB$$be1f313b",
-  "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
-},
-{
   "name":"org.apache.cxf.spring.boot.autoconfigure.CxfAutoConfiguration$SpringBusConfiguration",
   "allDeclaredFields":true,
   "allDeclaredMethods":true,
   "allDeclaredConstructors":true
-},
-{
-  "name":"org.apache.cxf.spring.boot.autoconfigure.CxfAutoConfiguration$SpringBusConfiguration$$EnhancerBySpringCGLIB$$c2bf2fa5",
-  "allDeclaredFields":true,
-  "allDeclaredMethods":true,
-  "allDeclaredConstructors":true,
-  "fields":[{"name":"CGLIB$FACTORY_DATA"}]
 },
 {
   "name":"org.apache.cxf.spring.boot.autoconfigure.CxfProperties",
@@ -1339,8 +1371,18 @@
   "methods":[{"name":"getOtherAttributes","parameterTypes":[] }]
 },
 {
+  "name":"org.apache.cxf.transports.http.configuration.HTTPClientPolicyExtensibility",
+  "allPublicFields":true,
+  "allDeclaredMethods":true
+},
+{
   "name":"org.apache.cxf.transports.http.configuration.HTTPServerPolicy",
   "methods":[{"name":"getOtherAttributes","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.cxf.transports.http.configuration.HTTPServerPolicyExtensibility",
+  "allPublicFields":true,
+  "allDeclaredMethods":true
 },
 {
   "name":"org.apache.cxf.transports.http.configuration.ObjectFactory",
@@ -1376,6 +1418,12 @@
 {
   "name":"org.apache.cxf.ws.addressing.wsdl.UsingAddressing",
   "methods":[{"name":"getOtherAttributes","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.cxf.ws.addressing.wsdl.UsingAddressingExtensibility",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true,
+  "allPublicMethods":true
 },
 {
   "name":"org.apache.cxf.ws.policy.AssertionBuilderRegistry"
@@ -1467,8 +1515,17 @@
   "methods":[{"name":"getOtherAttributes","parameterTypes":[] }]
 },
 {
+  "name":"org.apache.cxf.wsdl.http.AddressTypeExtensibility",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true,
+  "allPublicMethods":true
+},
+{
   "name":"org.apache.cxf.wsdl.http.ObjectFactory",
   "allDeclaredMethods":true
+},
+{
+  "name":"org.apache.cxf.wsdl.interceptors.BareOutInterceptor"
 },
 {
   "name":"org.apache.cxf.wsdl11.WSDLManagerImpl",
@@ -1506,6 +1563,15 @@
 {
   "name":"org.apache.tomcat.util.net.NioEndpoint",
   "allPublicMethods":true
+},
+{
+  "name":"org.apache.tomcat.util.net.NioEndpoint$SocketProcessor"
+},
+{
+  "name":"org.apache.tomcat.util.net.SocketProcessorBase"
+},
+{
+  "name":"org.apache.tomcat.util.threads.TaskThread$WrappingRunnable"
 },
 {
   "name":"org.apache.tomcat.websocket.server.WsFilter",
@@ -1753,7 +1819,6 @@
 },
 {
   "name":"org.springframework.beans.factory.BeanFactoryAware",
-  "allDeclaredMethods":true,
   "allPublicMethods":true
 },
 {
@@ -2703,7 +2768,7 @@
   "allPublicMethods":true
 },
 {
-  "name":"org.springframework.boot.validation.beanvalidation.MethodValidationExcludeFilter$$Lambda$388/0x00000008403a0040",
+  "name":"org.springframework.boot.validation.beanvalidation.MethodValidationExcludeFilter$$Lambda$341/0x0000001200551040",
   "allDeclaredFields":true,
   "allDeclaredMethods":true
 },
@@ -2931,22 +2996,6 @@
   "fields":[{"name":"EARLY_EXIT"}]
 },
 {
-  "name":"org.springframework.cglib.core.MethodWrapper$MethodWrapperKey",
-  "allDeclaredMethods":true
-},
-{
-  "name":"org.springframework.cglib.core.MethodWrapper$MethodWrapperKey$$KeyFactoryByCGLIB$$552be97a",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"org.springframework.cglib.proxy.Enhancer$EnhancerKey",
-  "allDeclaredMethods":true
-},
-{
-  "name":"org.springframework.cglib.proxy.Enhancer$EnhancerKey$$KeyFactoryByCGLIB$$4ce19e8f",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
   "name":"org.springframework.context.ApplicationContext"
 },
 {
@@ -3006,11 +3055,6 @@
 {
   "name":"org.springframework.context.annotation.Configuration",
   "allDeclaredMethods":true
-},
-{
-  "name":"org.springframework.context.annotation.ConfigurationClassEnhancer$EnhancedConfiguration",
-  "allDeclaredMethods":true,
-  "allPublicMethods":true
 },
 {
   "name":"org.springframework.context.annotation.ConfigurationClassPostProcessor",
@@ -3484,9 +3528,16 @@
   "methods":[{"name":"setThreadContextInheritable","parameterTypes":["boolean"] }]
 },
 {
+  "name":"org.springframework.web.method.annotation.ExceptionHandlerMethodResolver",
+  "methods":[{"name":"noMatchingExceptionHandler","parameterTypes":[] }]
+},
+{
   "name":"org.springframework.web.method.support.CompositeUriComponentsContributor",
   "allDeclaredFields":true,
   "allDeclaredMethods":true
+},
+{
+  "name":"org.springframework.web.method.support.InvocableHandlerMethod"
 },
 {
   "name":"org.springframework.web.method.support.UriComponentsContributor",
@@ -3783,6 +3834,9 @@
   ]
 },
 {
+  "name":"org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod"
+},
+{
   "name":"org.springframework.web.servlet.resource.ResourceUrlProvider",
   "allDeclaredFields":true,
   "allDeclaredMethods":true
@@ -3863,6 +3917,14 @@
   ]
 },
 {
+  "name":"org.springframework.web.servlet.view.AbstractUrlBasedView",
+  "allDeclaredMethods":true
+},
+{
+  "name":"org.springframework.web.servlet.view.AbstractView",
+  "allDeclaredMethods":true
+},
+{
   "name":"org.springframework.web.servlet.view.BeanNameViewResolver",
   "allDeclaredFields":true,
   "allDeclaredMethods":true
@@ -3875,6 +3937,10 @@
 {
   "name":"org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator",
   "allDeclaredFields":true,
+  "allDeclaredMethods":true
+},
+{
+  "name":"org.springframework.web.servlet.view.InternalResourceView",
   "allDeclaredMethods":true
 },
 {
@@ -3934,15 +4000,11 @@
   "name":"short[]"
 },
 {
-  "name":"sun.security.provider.DRBG",
-  "methods":[{"name":"<init>","parameterTypes":["java.security.SecureRandomParameters"] }]
-},
-{
-  "name":"sun.security.provider.SHA",
+  "name":"sun.security.provider.NativePRNG",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"sun.security.provider.SHA2$SHA256",
+  "name":"sun.security.provider.SHA",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 }
 ]

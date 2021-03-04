@@ -6,22 +6,34 @@ build:
 compile: build
 	./compile-only.sh
 
-# 			-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 \
-
 runjar:
-	echo "profiling to generate config.."
-	java -jar build/libs/cxf-server-java-first-0.0.1-SNAPSHOT.jar \
-			-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
-			-Dorg.apache.cxf.JDKBugHacks.all=true \
-			-Djava.util.logging.config.file=./src/main/resources/logging.properties
-
-profile:
-	echo "profiling to generate config.."
-	java -agentlib:native-image-agent=config-output-dir=src/main/resources/META-INF/native-image \
-			-jar build/libs/cxf-server-java-first-0.0.1-SNAPSHOT.jar \
-			-Dorg.apache.cxf.JDKBugHacks.all=true \
+	echo "Running JAR"
+	java -Dorg.apache.cxf.JDKBugHacks.all=true \
 			-Dorg.graalvm.nativeimage.imagecode=agent \
-			-Djava.util.logging.config.file=./src/main/resources/logging.properties
+			-Djava.util.logging.config.file=./src/main/resources/logging.properties \
+ 			-jar build/libs/cxf-server-java-first-0.0.1-SNAPSHOT.jar
+
+debug:
+	echo "Debugging JAR"
+	java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+			-Dorg.graalvm.nativeimage.imagecode=agent \
+			-Dorg.apache.cxf.JDKBugHacks.all=true \
+			-Djava.util.logging.config.file=./src/main/resources/logging.properties \
+			-jar build/libs/cxf-server-java-first-0.0.1-SNAPSHOT.jar
+
+profile: build
+	echo "Profiling to generate config.."
+	java -agentlib:native-image-agent=config-merge-dir=src/main/resources/META-INF/native-image \
+			-Dorg.graalvm.nativeimage.imagecode=agent \
+			-Dorg.apache.cxf.JDKBugHacks.all=true \
+			-jar build/libs/cxf-server-java-first-0.0.1-SNAPSHOT.jar
+
+capture: build
+	echo "Capturing"
+	java -Dcapture=true \
+         -Dorg.apache.cxf.JDKBugHacks.all=true \
+         -Dorg.graalvm.nativeimage.imagecode=agent \
+		  -jar build/libs/cxf-server-java-first-0.0.1-SNAPSHOT.jar
 
 clean:
 	./gradlew clean
