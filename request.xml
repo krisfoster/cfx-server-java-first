@@ -1,0 +1,8 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:typ="http://demo.mycompany.com/types">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <typ:getStockQuote>
+            <stockTicker>TSLA</stockTicker>
+        </typ:getStockQuote>
+    </soapenv:Body>
+</soapenv:Envelope>

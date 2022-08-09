@@ -1,53 +1,54 @@
-.PHONY: build
+
+JARFILE_NAME=cxf-server-java-first-0.0.1-SNAPSHOT.jar
+
+everything: clean profile compile
 
 build:
-	./gradlew build
+	./gradlew --stop
+	export USE_NATIVE_IMAGE_JAVA_PLATFORM_MODULE_SYSTEM=false && tracing=true && ./gradlew build
+	export USE_NATIVE_IMAGE_JAVA_PLATFORM_MODULE_SYSTEM=false && tracing=true && ./gradlew bootJar
+.PHONY: build
 
-compile: build
-	./compile-only.sh
-
-runjar:
-	@echo "Running JAR"
-	java -Dorg.apache.cxf.JDKBugHacks.all=true \
-			-Dorg.graalvm.nativeimage.imagecode=agent \
-			-Djava.util.logging.config.file=./src/main/resources/logging.properties \
- 			-jar build/libs/cxf-server-java-first-0.0.1-SNAPSHOT.jar
-
-debug:
-	@echo "Debugging JAR"
-	java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
-			-Dorg.graalvm.nativeimage.imagecode=agent \
-			-Dorg.apache.cxf.JDKBugHacks.all=true \
-			-Djava.util.logging.config.file=./src/main/resources/logging.properties \
-			-jar build/libs/cxf-server-java-first-0.0.1-SNAPSHOT.jar
-
-profile: build
-	@echo "Profiling to generate config.."
-	java -agentlib:native-image-agent=config-merge-dir=src/main/resources/META-INF/native-image \
-            -Dnative=true \
-			-Dorg.graalvm.nativeimage.imagecode=agent \
-			-Dorg.apache.cxf.JDKBugHacks.all=true \
-			-jar build/libs/cxf-server-java-first-0.0.1-SNAPSHOT.jar
-
-capture: build
-	@echo "Capturing"
-	java -Dcapture=true \
-         -Dcapture.dir=src/main/resources/ \
-         -Dorg.apache.cxf.JDKBugHacks.all=true \
-         -Dorg.graalvm.nativeimage.imagecode=agent \
-		  -jar build/libs/cxf-server-java-first-0.0.1-SNAPSHOT.jar
+compile:
+	export USE_NATIVE_IMAGE_JAVA_PLATFORM_MODULE_SYSTEM=false && tracing=false && ./gradlew nativeCompile
+.PHONY: compile
 
 clean:
 	./gradlew clean
+.PHONY: clean
+
+profile: build
+	@echo "Profiling to generate config.."
+	rm -f src/main/resources/META-INF/native-image/config-*.json
+	# Run this in the backgournd
+	java -DspringAot=true \
+		-agentlib:native-image-agent=config-merge-dir=src/main/resources/META-INF/native-image,track-reflection-metadata=false \
+		-jar build/libs/$(JARFILE_NAME) \
+		-DspringAot=true \
+		-Dorg.apache.cxf.JDKBugHacks.all=true \
+		-Djava.util.logging.config.file=./src/main/resources/logging.properties & echo $$! > .pid
+	sleep 10
+	# Hit the Rest endpoint
+	curl -v http://localhost:8080/quote/a
+	# Hit the SOAP endpoint
+	curl -X POST -H "Content-Type: text/xml" \
+    	-H 'SOAPAction: ' \
+    	--data-binary @request.xml \
+    	http://localhost:8080/cxf/ws/stockQuote
+    # Kill the Java process
+	cat .pid | xargs kill
+	rm -f .pid
+.PHONY: profile
 
 run:
-	./build/native-image/cxf-server-java-first -Dorg.apache.cxf.JDKBugHacks.all=true -Dnative=true
+	echo "Profiling to generate config.."
+	rm -f src/main/resources/META-INF/native-image/config-*.json
+	# Run this in the backgournd
+	java -DspringAot=true \
+		-agentlib:native-image-agent=config-merge-dir=src/main/resources/META-INF/native-image,track-reflection-metadata=false \
+		-jar build/libs/$(JARFILE_NAME) \
+		-DspringAot=true \
+		-Dorg.apache.cxf.JDKBugHacks.all=true \
+		-Djava.util.logging.config.file=./src/main/resources/logging.properties & echo $$! > .pid
+.PHONY: run
 
-d-build:
-	docker build \
-		--pull \
-		-f Dockerfile \
-		-t krisfoster/cxf:01 .
-
-d-run:
-	docker run --rm -it -P krisfoster/cxf:01 /bin/bash

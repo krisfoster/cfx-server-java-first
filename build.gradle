@@ -1,8 +1,8 @@
-import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
-
+import org.springframework.aot.gradle.dsl.AotMode
 plugins {
-	id "org.springframework.boot" version "2.4.2"
-	id "io.spring.dependency-management" version "1.0.11.RELEASE"
+	id 'org.springframework.boot' version '2.7.0'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'org.springframework.experimental.aot' version '0.12.0'
 	id 'java'
 }
 
@@ -10,29 +10,27 @@ group = 'com.cxf'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+// Comes from org.springframework.boot plugin
+apply plugin: "io.spring.dependency-management"
+apply plugin: "war"
+
 repositories {
 	mavenCentral()
-	maven { url = uri("https://repo.spring.io/milestone") }
-	maven { url = uri("https://repo.spring.io/snapshot") }
-
+	maven { url 'https://repo.spring.io/release' }
 }
 
 dependencies {
 
-	implementation "org.springframework.experimental:spring-graalvm-native:0.8.5"
 	implementation "org.springframework.boot:spring-boot-starter-web"
 	implementation "org.apache.cxf:cxf-spring-boot-starter-jaxws:3.4.2"
 	implementation "org.springframework.boot:spring-boot-starter-validation"
-	annotationProcessor 'org.springframework:spring-context-indexer'
-
 	implementation "javax.activation:activation:1.1.1"
 	implementation "javax.xml.bind:jaxb-api:2.3.1"
 	implementation "com.sun.xml.bind:jaxb-core:3.0.0"
 	implementation "com.sun.xml.bind:jaxb-impl:2.3.3"
 	implementation "com.sun.xml.ws:jaxws-ri:2.3.3"
     implementation "org.apache.cxf:cxf-rt-features-clustering:3.1.13"
-    compile("org.springframework.boot:spring-boot-devtools")
-    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
+	implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: "org.junit.vintage', module: 'junit-vintage-engine"
@@ -41,7 +39,46 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}// Configuration used by Spring AOT plugin to generate the native image configurations.
+springAot {
+	println "Printing tracing agent boolean value= " + System.getenv('tracing')
+	if(System.getenv('tracing') == 'true'){
+		mode = AotMode.NATIVE_AGENT
+	} else {
+		// default mode is NATIVE
+		mode = AotMode.NATIVE
+	}
+	//Added because LocalAthenaBrowserService has 2 main classes and generateAot needs to know which main class to use
+	mainClass='com.cxf.server.ServerApplication'
+	// Removing unnecessary supports from GraalVm native images to optimize the size of the native image
+	// Need spring SpEL support because SpEL is used in localabeservice. e.g: @Value("${app.version:dev}")
+	removeSpelSupport = false
+	// Removing YAML support
+	removeYamlSupport = true
+	// Need XML support for handling results in native image
+	removeXmlSupport = false
+	// Remove JMX Support
+	removeJmxSupport = true
 }
+
+// Configuration used by GraalVM native image compiler while building native image.
+graalvmNative {
+	binaries {
+		main {
+			// Main options
+			debug = true // Determines if debug info should be generated, defaults to false
+			verbose = true // Add verbose output, defaults to false
+			fallback = false // Sets the fallback mode of native-image, defaults to false
+			buildArgs.add("--initialize-at-build-time=com.sun.xml.bind.v2.model.impl.Utils")
+			buildArgs.add('--initialize-at-build-time=sun.instrument.InstrumentationImpl')
+			buildArgs.add('--initialize-at-run-time=com.sun.xml')
+			buildArgs.add("--initialize-at-build-time=com.sun.xml.bind.v2.runtime.property.PropertyFactory")
+			buildArgs.add('-H:+ReportExceptionStackTraces')
+			buildArgs.add('-Ob')
+		}
+	}
+}
+
 
 
 

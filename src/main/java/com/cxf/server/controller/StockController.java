@@ -4,19 +4,18 @@
 
 package com.cxf.server.controller;
 
-import com.cxf.server.ApplicationConfig;
+import com.cxf.server.DumpingClassLoaderCapturer;
 import com.cxf.server.beans.Quote;
-import com.cxf.server.graal.DumpingClassLoaderCapturer;
 import com.cxf.server.service.QuoteReporter;
+
+import java.io.File;
+import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Logger;
 
 /**
  *   //todo: Finish Description!!!
@@ -25,20 +24,15 @@ import java.util.logging.Logger;
 @RestController
 public class StockController {
 
-	private final static Logger LOGGER = Logger.getLogger(StockController.class.getName());
-
 	private final QuoteReporter quoteReporter;
 
-	private final DumpingClassLoaderCapturer clsLoader;
-
-	public StockController(@Qualifier("stockQuoteSoapClient") QuoteReporter quoteReporter, DumpingClassLoaderCapturer clsLoader) {
+	public StockController(@Qualifier("stockQuoteSoapClient") QuoteReporter quoteReporter) {
 		this.quoteReporter = quoteReporter;
-		this.clsLoader = clsLoader;
 	}
+
 
 	@RequestMapping(value = "/quote/{ticker}")
 	public Quote getQuote(@PathVariable("ticker") String ticker){
-		LOGGER.info("STOCK QUOTE");
 		return quoteReporter.getStockQuote(ticker);
 	}
 }

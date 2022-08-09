@@ -1,0 +1,26 @@
+[
+{
+  "name":"com.sun.xml.bind.v2.runtime.property.SingleElementLeafProperty",
+  "methods":[{"name":"<init>","parameterTypes":["com.sun.xml.bind.v2.runtime.JAXBContextImpl","com.sun.xml.bind.v2.model.runtime.RuntimeElementPropertyInfo"] }]
+},
+{
+"name":"com.sun.xml.bind.v2.runtime.property.ArrayElementLeafProperty",
+"methods":[{"name":"<init>","parameterTypes":["com.sun.xml.bind.v2.runtime.JAXBContextImpl","com.sun.xml.bind.v2.model.runtime.RuntimeElementPropertyInfo"] }]
+},
+{
+"name":"com.sun.xml.bind.v2.runtime.property.SingleReferenceNodeProperty",
+"methods":[{"name":"<init>","parameterTypes":["com.sun.xml.bind.v2.runtime.JAXBContextImpl","com.sun.xml.bind.v2.model.runtime.RuntimeReferencePropertyInfo"] }]
+},
+{
+"name":"com.sun.xml.bind.v2.runtime.property.SingleMapNodeProperty",
+"methods":[{"name":"<init>","parameterTypes":["com.sun.xml.bind.v2.runtime.JAXBContextImpl","com.sun.xml.bind.v2.model.runtime.RuntimeMapPropertyInfo"] }]
+},
+{
+"name":"com.sun.xml.bind.v2.runtime.property.ArrayElementNodeProperty",
+"methods":[{"name":"<init>","parameterTypes":["com.sun.xml.bind.v2.runtime.JAXBContextImpl","com.sun.xml.bind.v2.model.runtime.RuntimeElementPropertyInfo"] }]
+},
+{
+"name":"com.sun.xml.bind.v2.runtime.property.ArrayReferenceNodeProperty",
+"methods":[{"name":"<init>","parameterTypes":["com.sun.xml.bind.v2.runtime.JAXBContextImpl","com.sun.xml.bind.v2.model.runtime.RuntimeReferencePropertyInfo"] }]
+}
+]
