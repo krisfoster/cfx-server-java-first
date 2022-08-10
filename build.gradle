@@ -4,6 +4,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'org.springframework.experimental.aot' version '0.12.0'
 	id 'java'
+	id 'idea'
 }
 
 group = 'com.cxf'
@@ -38,6 +39,14 @@ dependencies {
 		exclude group: "org.junit.vintage', module: 'junit-vintage-engine"
 	}
 }
+
+idea {
+	module {
+		downloadJavadoc = true
+		downloadSources = true
+	}
+}
+
 
 test {
 	useJUnitPlatform()
