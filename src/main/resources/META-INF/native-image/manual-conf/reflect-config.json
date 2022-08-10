@@ -22,5 +22,77 @@
 {
 "name":"com.sun.xml.bind.v2.runtime.property.ArrayReferenceNodeProperty",
 "methods":[{"name":"<init>","parameterTypes":["com.sun.xml.bind.v2.runtime.JAXBContextImpl","com.sun.xml.bind.v2.model.runtime.RuntimeReferencePropertyInfo"] }]
-}
+},
+  {
+    "name":"org.terracotta.context.query.Matcher",
+    "methods":[
+      {"name":"<init>","parameterTypes":[] },
+      {"name":"matchesSafely","parameterTypes":["org.terracotta.context.ContextElement"] },
+      {"name":"toString","parameterTypes":[] }
+    ]
+  },
+  {
+    "name":"org.terracotta.context.query.Matchers$1",
+    "methods":[
+      {"name":"<init>","parameterTypes":[] },
+      {"name":"matchesSafely","parameterTypes":["org.terracotta.context.ContextElement"] },
+      {"name":"toString","parameterTypes":[] }
+    ]
+  },
+  {
+    "name":"org.terracotta.context.query.Matchers$2",
+    "methods":[
+      {"name":"<init>","parameterTypes":[] },
+      {"name":"matchesSafely","parameterTypes":["org.terracotta.context.ContextElement"] },
+      {"name":"toString","parameterTypes":[] }
+    ]
+  },
+  {
+    "name":"org.terracotta.context.query.Matchers$3",
+    "methods":[
+      {"name":"<init>","parameterTypes":[] },
+      {"name":"matchesSafely","parameterTypes":["org.terracotta.context.ContextElement"] },
+      {"name":"toString","parameterTypes":[] }
+    ]
+  },
+  {
+    "name":"org.terracotta.context.query.Matchers$4",
+    "methods":[
+      {"name":"<init>","parameterTypes":[] },
+      {"name":"matchesSafely","parameterTypes":["org.terracotta.context.ContextElement"] },
+      {"name":"toString","parameterTypes":[] }
+    ]
+  },
+  {
+    "name":"org.terracotta.context.query.Matchers$5",
+    "methods":[
+      {"name":"<init>","parameterTypes":[] },
+      {"name":"matchesSafely","parameterTypes":["org.terracotta.context.ContextElement"] },
+      {"name":"toString","parameterTypes":[] }
+    ]
+  },
+  {
+    "name":"org.terracotta.context.query.Matchers$6",
+    "methods":[
+      {"name":"<init>","parameterTypes":[] },
+      {"name":"matchesSafely","parameterTypes":["org.terracotta.context.ContextElement"] },
+      {"name":"toString","parameterTypes":[] }
+    ]
+  },
+  {
+    "name":"org.terracotta.context.query.Matchers$8",
+    "methods":[
+      {"name":"<init>","parameterTypes":[] },
+      {"name":"matchesSafely","parameterTypes":["org.terracotta.context.ContextElement"] },
+      {"name":"toString","parameterTypes":[] }
+    ]
+  },
+  {
+    "name":"org.terracotta.context.query.Matchers$9",
+    "methods":[
+      {"name":"<init>","parameterTypes":[] },
+      {"name":"matchesSafely","parameterTypes":["org.terracotta.context.ContextElement"] },
+      {"name":"toString","parameterTypes":[] }
+    ]
+  }
 ]

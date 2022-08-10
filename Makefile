@@ -30,6 +30,8 @@ profile: build
 	sleep 10
 	# Hit the Rest endpoint
 	curl -v http://localhost:8080/quote/a
+	# Plus the cached endpoint
+	curl -v http://localhost:8080/cache/a
 	# Hit the SOAP endpoint
 	curl -X POST -H "Content-Type: text/xml" \
     	-H 'SOAPAction: ' \
